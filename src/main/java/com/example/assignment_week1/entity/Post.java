@@ -36,7 +36,7 @@ public class Post {
     private String content;
 
     @Column
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
 
 
