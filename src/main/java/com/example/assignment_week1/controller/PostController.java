@@ -25,7 +25,7 @@ public class PostController {
         return ResponseEntity.ok(responseDtoList);
     }
 
-    @PostMapping@GetMapping("/create")
+    @PostMapping("/create")
     public ResponseEntity<PostResponseDto> createPost(@RequestBody PostRequestDto requestDto) {
         // PostRequestDto를 사용하여 게시글을 생성하고, 생성된 게시글의 정보를 PostResponseDto에 담아 반환합니다.
         PostResponseDto responseDto = postService.createPost(requestDto);
@@ -33,14 +33,14 @@ public class PostController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
         // id를 사용하여 해당 게시글의 정보를 조회하고, 조회된 게시글의 정보를 PostResponseDto에 담아 반환합니다.
         PostResponseDto responseDto = postService.getPost(id);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @PutMapping("put/{id}")
+    @PutMapping("/put/{id}")
     public ResponseEntity<PostResponseDto> updatePost(
             @PathVariable Long id, @RequestBody PostRequestDto requestDto) {
         // id와 수정할 데이터를 사용하여 게시글을 수정하고, 수정된 게시글의 정보를 PostResponseDto에 담아 반환합니다.
@@ -48,7 +48,7 @@ public class PostController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePost(
             @PathVariable Long id, @RequestParam String password) {
         // id와 비밀번호를 사용하여 게시글을 삭제합니다.

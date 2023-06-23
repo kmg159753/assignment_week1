@@ -1,9 +1,7 @@
 package com.example.assignment_week1.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +18,7 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", unique = true, nullable = false)
     private Long posId;
 

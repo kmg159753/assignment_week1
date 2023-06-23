@@ -40,6 +40,7 @@ public class PostService {
         post.setPassword(requestDto.getPassword());
         post.setContent(requestDto.getContent());
         post.setCreated_at(LocalDateTime.now());
+        post.setAuthor(requestDto.getAuthor());
 
         // 게시글 저장
         Post savedPost = postRepository.save(post);
@@ -49,7 +50,7 @@ public class PostService {
         responseDto.setTitle(savedPost.getTitle());
         responseDto.setAuthor(savedPost.getAuthor());
         responseDto.setCreatedAt(savedPost.getCreated_at());
-
+        responseDto.setContent(savedPost.getContent());
         return responseDto;
     }
 
@@ -63,6 +64,7 @@ public class PostService {
         responseDto.setTitle(post.getTitle());
         responseDto.setAuthor(post.getAuthor());
         responseDto.setCreatedAt(post.getCreated_at());
+        responseDto.setContent(post.getContent());
 
         return responseDto;
     }
@@ -90,6 +92,7 @@ public class PostService {
         responseDto.setTitle(updatedPost.getTitle());
         responseDto.setAuthor(updatedPost.getAuthor());
         responseDto.setCreatedAt(updatedPost.getCreated_at());
+        responseDto.setContent(updatedPost.getContent());
 
         return responseDto;
     }
