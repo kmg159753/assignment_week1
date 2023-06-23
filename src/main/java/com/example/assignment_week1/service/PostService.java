@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,14 +22,16 @@ public class PostService {
 
 
     public List<PostResponseDto> getAllPosts() {
-        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "created_At"));
+        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "created_at"));
+
+
 
         List<PostResponseDto> responseDtoList = new ArrayList<>();
         for (Post post : postList) {
             PostResponseDto responseDto = new PostResponseDto();
             responseDto.setTitle(post.getTitle());
             responseDto.setAuthor(post.getAuthor());
-            responseDto.setCreatedAt(post.getCreated_at());
+            responseDto.setCreated_at(post.getCreated_at());
             responseDtoList.add(responseDto);
         }
 
@@ -49,7 +53,7 @@ public class PostService {
         PostResponseDto responseDto = new PostResponseDto();
         responseDto.setTitle(savedPost.getTitle());
         responseDto.setAuthor(savedPost.getAuthor());
-        responseDto.setCreatedAt(savedPost.getCreated_at());
+        responseDto.setCreated_at(savedPost.getCreated_at());
         responseDto.setContent(savedPost.getContent());
         return responseDto;
     }
@@ -63,7 +67,7 @@ public class PostService {
         PostResponseDto responseDto = new PostResponseDto();
         responseDto.setTitle(post.getTitle());
         responseDto.setAuthor(post.getAuthor());
-        responseDto.setCreatedAt(post.getCreated_at());
+        responseDto.setCreated_at(post.getCreated_at());
         responseDto.setContent(post.getContent());
 
         return responseDto;
@@ -91,7 +95,7 @@ public class PostService {
         PostResponseDto responseDto = new PostResponseDto();
         responseDto.setTitle(updatedPost.getTitle());
         responseDto.setAuthor(updatedPost.getAuthor());
-        responseDto.setCreatedAt(updatedPost.getCreated_at());
+        responseDto.setCreated_at(updatedPost.getCreated_at());
         responseDto.setContent(updatedPost.getContent());
 
         return responseDto;

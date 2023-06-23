@@ -16,9 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
-
-
-
     @GetMapping("/get/all")
     public ResponseEntity<List<PostResponseDto>> getAllPosts() {
         List<PostResponseDto> responseDtoList = postService.getAllPosts();
