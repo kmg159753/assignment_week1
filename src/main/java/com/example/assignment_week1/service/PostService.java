@@ -74,19 +74,16 @@ public class PostService {
         if (!post.getPassword().equals(requestDto.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 다릅니다.");
         }
-
         // 게시글 수정
         post.setTitle(requestDto.getTitle());
         post.setAuthor(requestDto.getAuthor());
         post.setContent(requestDto.getContent());
 
-        // 수정된 게시글 저장
-        Post updatedPost = postRepository.save(post);
+       // 수정된 게시글 저장
+//        postRepository.save(post);
 
         // PostResponseDto에 수정된 게시글 정보 담기
         PostResponseDto responseDto = new PostResponseDto();
-
-
         return responseDto.getResponseDto(post.getTitle(), post.getAuthor(),
                 post.getContent(), post.getCreatedAt());
     }
