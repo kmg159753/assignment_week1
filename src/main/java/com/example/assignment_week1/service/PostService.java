@@ -23,16 +23,11 @@ public class PostService {
 
         return postRepository.findAll().stream().map(factor -> {
             PostResponseDto dto = new PostResponseDto();
-            dto.setContent(factor.getContent());
-            dto.setAuthor(factor.getAuthor());
-            dto.setTitle(factor.getTitle());
-            dto.setCreated_at(factor.getCreatedAt());
-
-            return dto;
+            return dto.getResponseDto(factor.getTitle(), factor.getAuthor(),
+                    factor.getContent(), factor.getCreatedAt());
         }).sorted(Comparator.comparing(PostResponseDto::getCreated_at).reversed()).collect(Collectors.toList());
 
     }
-
 
     public PostResponseDto getPost(Long id) {
         // id를 사용하여 게시글 조회
@@ -41,32 +36,31 @@ public class PostService {
 
         // PostResponseDto에 조회된 게시글 정보 담기
         PostResponseDto responseDto = new PostResponseDto();
-        responseDto.setTitle(post.getTitle());
-        responseDto.setAuthor(post.getAuthor());
-        responseDto.setCreated_at(post.getCreatedAt());
-        responseDto.setContent(post.getContent());
 
-        return responseDto;
+        return responseDto.getResponseDto(post.getTitle(), post.getAuthor(),
+                post.getContent(), post.getCreatedAt());
+
     }
     public PostResponseDto createPost(PostRequestDto requestDto) {
+
         // PostRequestDto를 사용하여 새로운 게시글 생성
         Post post = new Post();
-        post.setTitle(requestDto.getTitle());
-        post.setPassword(requestDto.getPassword());
-        post.setContent(requestDto.getContent());
-        post.setCreatedAt(LocalDateTime.now());
-        post.setAuthor(requestDto.getAuthor());
+
+
+
 
         // 게시글 저장
-        Post savedPost = postRepository.save(post);
+        Post savedPost = postRepository.save(
+                post.getEntity(requestDto.getPassword(), requestDto.getTitle(),
+                requestDto.getContent(), requestDto.getContent(), LocalDateTime.now())
+        );
 
         // PostResponseDto에 저장된 게시글 정보 담기
         PostResponseDto responseDto = new PostResponseDto();
-        responseDto.setTitle(savedPost.getTitle());
-        responseDto.setAuthor(savedPost.getAuthor());
-        responseDto.setCreated_at(savedPost.getCreatedAt());
-        responseDto.setContent(savedPost.getContent());
-        return responseDto;
+
+        return responseDto.getResponseDto(savedPost.getTitle(), savedPost.getAuthor(),
+                savedPost.getContent(), savedPost.getCreatedAt());
+
     }
 
 
@@ -74,11 +68,11 @@ public class PostService {
     public PostResponseDto updatePost(Long id, PostRequestDto requestDto) {
         // id를 사용하여 수정할 게시글 조회
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+                .orElseThrow(() -> new IllegalArgumentException("수정하려는 게시글이 없습니다."));
 
         // 비밀번호 일치 여부 확인
         if (!post.getPassword().equals(requestDto.getPassword())) {
-            throw new IllegalArgumentException("Password does not match");
+            throw new IllegalArgumentException("비밀번호가 다릅니다.");
         }
 
         // 게시글 수정
@@ -91,12 +85,10 @@ public class PostService {
 
         // PostResponseDto에 수정된 게시글 정보 담기
         PostResponseDto responseDto = new PostResponseDto();
-        responseDto.setTitle(updatedPost.getTitle());
-        responseDto.setAuthor(updatedPost.getAuthor());
-        responseDto.setCreated_at(updatedPost.getCreatedAt());
-        responseDto.setContent(updatedPost.getContent());
 
-        return responseDto;
+
+        return responseDto.getResponseDto(post.getTitle(), post.getAuthor(),
+                post.getContent(), post.getCreatedAt());
     }
 
     public void deletePost(Long id, String password) {
@@ -108,7 +100,6 @@ public class PostService {
         if (!post.getPassword().equals(password)) {
             throw new IllegalArgumentException("Password does not match");
         }
-
         // 게시글 삭제
         postRepository.delete(post);
     }

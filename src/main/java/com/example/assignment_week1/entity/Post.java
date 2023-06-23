@@ -20,7 +20,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", unique = true, nullable = false)
-    private Long posId;
+    private Long postId;
 
 
     @Column
@@ -39,5 +39,15 @@ public class Post {
     private LocalDateTime createdAt;
 
 
+    public Post getEntity(String password, String title, String author, String content, LocalDateTime createdAt) {
+        Post post = new Post();
 
+        post.setPassword(password);
+        post.setTitle(title);
+        post.setAuthor(author);
+        post.setContent(content);
+        post.setCreatedAt(createdAt);
+
+        return post;
+    }
 }
