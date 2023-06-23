@@ -20,7 +20,7 @@ public class PostService {
 
 
     public List<PostResponseDto> getAllPosts() {
-        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<Post> postList = postRepository.findAll(Sort.by(Sort.Direction.DESC, "created_At"));
 
         List<PostResponseDto> responseDtoList = new ArrayList<>();
         for (Post post : postList) {
